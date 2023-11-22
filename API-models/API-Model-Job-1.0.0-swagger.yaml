@@ -1,0 +1,147 @@
+openapi: 3.0.0
+servers: []
+info:
+  version: "1.0.0"
+  title: Job
+  description: >-
+    API model for Job.
+    Project: SkillVerse
+security:
+  - application:
+      - read
+      - write
+paths:
+  /job:
+    get:
+      tags: [Job]
+      summary: get all jobs
+      description: >-
+        get all Jobs (job id and job name)
+        
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Job]
+      summary: add new job
+      description: >-
+        add a new job with job name and job description
+      responses:
+        '200':
+          description: OK 
+        
+  /job/{jobID}:
+    get:
+      tags: [Job]
+      parameters:
+        - name: jobID
+          in: path
+          required: true
+          description: jobID 
+          schema:
+            type: integer
+      summary: get job by job ID
+      description: >-
+        get job (job name, job description, skill IDs, skill, tag IDS, tag)
+      responses:
+        '200':
+          description: OK
+    
+  /job/{jobID}/skill:
+    get:
+      tags: [Job]
+      parameters:
+        - name: jobID
+          in: path
+          required: true
+          description:  jobID 
+          schema:
+            type: integer
+      summary: get skills by job ID
+      description: >-
+        get job skills (skill ID, skill)
+      responses:
+        '200':
+          description: OK 
+    post:
+      tags: [Job]
+      parameters:
+        - name: jobID
+          in: path
+          required: true
+          description:  jobID 
+          schema:
+            type: integer
+      summary: add skill to job ID
+      description: >-
+        add choosen skill to job
+      responses:
+        '200':
+          description: OK       
+
+  /job/{jobID}/tag:
+    get:
+      tags: [Job]
+      parameters:
+        - name: jobID
+          in: path
+          required: true
+          description:  jobID 
+          schema:
+            type: integer
+      summary: get tags by job ID
+      description: >-
+        get job tags (tag ID, tag)
+      responses:
+        '200':
+          description: OK 
+    post:
+      tags: [Job]
+      parameters:
+        - name: jobID
+          in: path
+          required: true
+          description:  jobID 
+          schema:
+            type: integer
+      summary: add tag to job ID
+      description: >-
+        add choosen tag to job
+      responses:
+        '200':
+          description: OK  
+          
+  /skills:
+    get:
+      tags: [Skill]
+      summary: get all skills
+      description: >-
+        
+      responses:
+        '200':
+          description: OK
+          
+  /tags:
+    get:
+      tags: [Tag]
+      summary: get all tags
+      description: >-
+        
+      responses:
+        '200':
+          description: OK
+          
+components:
+  securitySchemes:
+    application:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+tags:
+  - name: Job
+  - name: Skill
+  - name: Tag
