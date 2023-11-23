@@ -9,7 +9,7 @@ paths:
       summary: List all tags or a subset based on tag IDs
       operationId: listTags
       parameters:
-        - name: tagIds
+        - name: only
           in: query
           description: Array of tag IDs to fetch a subset of tags
           required: false
