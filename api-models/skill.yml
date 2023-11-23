@@ -7,7 +7,7 @@ paths:
     get:
       summary: Retrieve a list of all skills
       parameters:
-            - name: skillids
+            - name: only
               in: query
               description: Array of tag IDs to fetch a subset of skills
               required: false
