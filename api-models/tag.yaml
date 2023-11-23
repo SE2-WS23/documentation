@@ -115,7 +115,3 @@ components:
         category:
           type: string
           description: Category of the tag
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/CHRISSYDRX/tags/1.0.0
