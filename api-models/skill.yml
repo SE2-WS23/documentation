@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Skill Microservice API
+  version: 1.0.0
+paths:
+  /skill:
+    get:
+      summary: Retrieve a list of all skills
+      responses:
+        '200':
+          description: Successfully retrieved all skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+
+  /skill/{id}:
+    get:
+      summary: Retrieve a specific skill by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Unique identifier of the skill
+      responses:
+        '200':
+          description: Successfully retrieved the skill
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+        '404':
+          description: Skill not found
+    put:
+      summary: Update an existing skill by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Unique identifier of the skill to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Skill'
+      responses:
+        '200':
+          description: Skill successfully updated
+        '400':
+          description: Invalid request data
+        '404':
+          description: Skill not found
+    delete:
+      summary: Delete a skill by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Unique identifier of the skill to delete
+      responses:
+        '204':
+          description: Skill successfully deleted
+        '404':
+          description: Skill not found
+
+components:
+  schemas:
+    Skill:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
