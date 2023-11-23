@@ -6,6 +6,17 @@ paths:
   /skill:
     get:
       summary: Retrieve a list of all skills
+      parameters:
+            - name: skillids
+              in: query
+              description: Array of tag IDs to fetch a subset of skills
+              required: false
+              style: form
+              explode: true
+              schema:
+                type: array
+                items:
+                  type: string
       responses:
         '200':
           description: Successfully retrieved all skills
