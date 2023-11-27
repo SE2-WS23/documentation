@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: User Management API
+  description: API for managing user profiles, including normal employees and administrative users.
+  version: 1.0.0
+
+paths:
+  /user:
+    get:
+      summary: Get all users
+      description: Retrieve a list of all users, with an option to fetch a subset based on specific ids.
+      parameters:
+        - name: only
+          in: query
+          description: Array of tag IDs to fetch a subset of users
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  
+    post:
+      summary: Create a new user
+      description: Create a new user with email, password, and role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+    
+  /user/{id}:
+    get:
+      summary: Get user by ID
+      description: Retrieve details of a user by their unique identifier.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the user.
+          schema:
+            $ref: "#/components/schemas/User"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        
+    put:
+      summary: Update user details
+      description: Update existing user details such as name, email, password, role.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the user.
+          schema:
+            $ref: "#/components/schemas/User"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+        '404':
+          description: User not found
+    
+    delete:
+      summary: Delete user details
+      description: Delete existing user details such as name, email, password, role.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Unique identifier of the user.
+          schema:
+            $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: User deleted
+        "404":
+          description: User not found
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - email
+        - password
+        - role
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user.
+        firstname:
+          type: string
+          description: Firstname of the user.
+        lastname:
+          type: string
+          description: lastname of the user.
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+        password:
+          type: string
+          format: password
+          description: Password for user account authentication.
+        role:
+          type: string
+          description: Role of User
+          enum:
+            - trainee #User who trains its skills
+            - administration #User who can manage basic employee data
+            - trainingManager #User who can manage trainings/courses/journeys of a company
+            - companyOwner # User who can manage everything inside a company. Employee and Training related
+
