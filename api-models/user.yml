@@ -12,7 +12,7 @@ paths:
       parameters:
         - name: only
           in: query
-          description: Array of tag IDs to fetch a subset of users
+          description: Array of user IDs to fetch a subset of users
           required: false
           style: form
           explode: true
