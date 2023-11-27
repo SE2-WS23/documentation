@@ -119,7 +119,7 @@ components:
           description: Firstname of the user.
         lastname:
           type: string
-          description: lastname of the user.
+          description: Lastname of the user.
         email:
           type: string
           format: email
