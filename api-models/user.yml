@@ -87,8 +87,8 @@ paths:
           description: User not found
     
     delete:
-      summary: Delete user details
-      description: Delete existing user details such as name, email, password, role.
+      summary: Delete user 
+      description: Delete existing user
       parameters:
         - name: id
           in: path
