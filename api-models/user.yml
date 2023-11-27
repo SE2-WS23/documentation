@@ -32,7 +32,7 @@ paths:
   
     post:
       summary: Create a new user
-      description: Create a new user with email, password, and role.
+      description: Create a new user with firstname, lastname, email, password, and role.
       requestBody:
         required: true
         content:
