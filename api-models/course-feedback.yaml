@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: Resource Management API
+  title: Course Feedback API
   version: "1.0.0"
   description: API for managing Course feedback with field selection and full data retrieval.
 
