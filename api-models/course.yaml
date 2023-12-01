@@ -22,7 +22,7 @@ paths:
               type: string
         - name: filterByTag
           in: query
-          description: Array of tag IDs to filter the courses by tags
+          description: Array of course IDs to filter the courses by tags
           required: false
           explode: true
           schema:
