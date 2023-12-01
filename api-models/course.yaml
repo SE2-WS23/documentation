@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: Courses Microservice API
+  description: This API manages different types of courses in SkillVerse
+  version: 1.0.0
+
+paths:
+  /courses:
+    get:
+      summary: List all courses
+      operationId: getAllCourses
+      parameters: 
+        - name: only
+          in: query
+          description: Array of course IDs to fetch a subset of courses
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filterByTag
+          in: query
+          description: Array of course IDs to filter the courses by tags
+          required: false
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filterByTitle
+          in: query
+          description: String which should be part of the title
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: nested
+          in: query
+          description: Determines if the nested data will be returned
+          required: false
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+
+    post:
+      summary: Create a new course
+      operationId: createCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '201':
+          description: Course created
+
+  /courses/{courseId}:
+    get:
+      summary: Get a course by ID
+      operationId: getCourseById
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '404':
+          description: Course not found
+
+    put:
+      summary: Update a course
+      operationId: updateCourse
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '200':
+          description: Course updated
+        '404':
+          description: Course not found
+
+    delete:
+      summary: Delete a course
+      operationId: deleteCourse
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Course deleted
+        '404':
+          description: Course not found
+
+components:
+  schemas:
+    Course:
+      type: object
+      required:
+        - title
+        - type
+        - content
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the course
+        title:
+          type: string
+          description: Title of the course
+        type:
+          type: string
+          description: Type of the course (article, code challenge, video, etc.)
+        content:
+          type: string
+          description: Content of the course
+        tags:
+          type: array
+          items:
+            type: string
+          description: Array of tags - See more in the tags microservice
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional metadata related to the course
