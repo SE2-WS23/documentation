@@ -8,7 +8,7 @@ paths:
   /courses:
     get:
       summary: List all courses
-      operationId: listCourses
+      operationId: getAllCourses
       parameters: 
         - name: only
           in: query
