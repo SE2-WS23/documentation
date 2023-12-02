@@ -76,7 +76,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
         '400':
-          description: Coruse not found
+          description: Job not found
           
     put:
       summary: Update a job
