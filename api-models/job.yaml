@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Job Microservice API
+  description: >-
+    This API manages different types of jobs in SkillVerse
+
+paths:
+  /jobs:
+    get:
+      summary: List all jobs
+      operationId: getAllCourses
+      parameters: 
+        - name: only
+          in: query
+          description: Array of course IDs to fetch ta subset of jobs
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: filterByJobName
+          in: query
+          description: String which should be part of the job name
+          required: false 
+          explode: true 
+          schema:
+            type: string
+        - name: nested
+          in: query
+          description: Determise if the nested data will be returnd
+          required: false
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+    
+    post: 
+      summary: Create a new job
+      operationId: createJob
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: Job created
+  
+  /jobs/{jobId}:
+    get:
+      summary: Get a job by ID
+      operationId: getJobByID
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '400':
+          description: Coruse not found
+          
+    put:
+      summary: Update a job
+      operationId: updateJob
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '200':
+          description: Job updated
+        '404':
+          description: Job not found
+          
+    delete:
+      summary: Delete a job
+      operationId: deleteJob
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job deleted
+        '400':
+          description: Job not found
+              
+components:
+  schemas:
+    Job:
+      type: object
+      required:
+        - jobName
+        - jobDescription
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the job
+        jobName: 
+          type: string
+          description: Name of the job
+        jobDescription:
+          type: string
+          description: Description of the job
+        skills:
+          type: array
+          items: 
+            type: string
+          description: Array of skills - See more in the skills microservice
+        tags:
+          type: array
+          items:
+            type: string
+          description: Array of tags - See mor in the skills microservice
+        metadata: 
+          type: object
+          additionalProperties: true
+          description: Additional metadata related to the job
