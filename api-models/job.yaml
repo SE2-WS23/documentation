@@ -13,7 +13,7 @@ paths:
       parameters: 
         - name: only
           in: query
-          description: Array of course IDs to fetch ta subset of jobs
+          description: Array of job IDs to fetch a subset of jobs
           required: false
           style: form
           explode: true
