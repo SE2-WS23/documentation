@@ -21,13 +21,6 @@ paths:
             type: array
             items:
               type: string
-        - name: filterByTitle
-          in: query
-          description: String which should be part of the title
-          required: false 
-          explode: true 
-          schema:
-            type: string
         - name: full
           in: query
           description: Determine if the nested data will be returned
@@ -96,6 +89,8 @@ paths:
       responses:
         '200':
           description: Training updated
+        '400':
+          description: Invalid request data
         '404':
           description: Training not found
           
