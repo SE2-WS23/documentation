@@ -13,7 +13,7 @@ paths:
       parameters: 
         - name: only
           in: query
-          description: Array of course IDs to fetch ta subset of trainings
+          description: Array of training IDs to fetch ta subset of trainings
           required: false
           style: form
           explode: true
