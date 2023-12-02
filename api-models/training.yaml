@@ -28,7 +28,7 @@ paths:
           explode: true 
           schema:
             type: string
-        - name: nested
+        - name: full
           in: query
           description: Determise if the nested data will be returnd
           required: false
