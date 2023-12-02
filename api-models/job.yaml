@@ -9,7 +9,7 @@ paths:
   /jobs:
     get:
       summary: List all jobs
-      operationId: getAllCourses
+      operationId: getAllJobs
       parameters: 
         - name: only
           in: query
@@ -21,13 +21,6 @@ paths:
             type: array
             items:
               type: string
-        - name: filterByJobName
-          in: query
-          description: String which should be part of the job name
-          required: false 
-          explode: true 
-          schema:
-            type: string
         - name: full
           in: query
           description: Determine if the nested data will be returned
@@ -68,6 +61,13 @@ paths:
           required: true
           schema:
             type: string
+        - name: full
+          in: query
+          description: Determise if the nested data will be returnd
+          required: false
+          explode: true
+          schema:
+            type: boolean
       responses:
         '200':
           description: Job details
@@ -96,6 +96,8 @@ paths:
       responses:
         '200':
           description: Job updated
+        '400':
+          description: Invalid request data
         '404':
           description: Job not found
           
@@ -140,7 +142,7 @@ components:
           type: array
           items:
             type: string
-          description: Array of tags - See mor in the skills microservice
+          description: Array of tags - See more in the tags microservice
         metadata: 
           type: object
           additionalProperties: true
