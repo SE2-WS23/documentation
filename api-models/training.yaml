@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Training Microservice API
+  description: >-
+    This API manages different types of trainings in SkillVerse
+
+paths:
+  /trainings:
+    get:
+      summary: List all training
+      operationId: getAllTrainings
+      parameters: 
+        - name: only
+          in: query
+          description: Array of training IDs to fetch ta subset of trainings
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: full
+          in: query
+          description: Determine if the nested data will be returned
+          required: false
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of trainings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Training'
+    
+    post: 
+      summary: Create a new training
+      operationId: createTraining
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Training'
+      responses:
+        '201':
+          description: Training created
+  
+  /trainings/{trainingId}:
+    get:
+      summary: Get a training by ID
+      operationId: getTrainingByID
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Training details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Training'
+        '400':
+          description: Training not found
+          
+    put:
+      summary: Update a training
+      operationId: updateTraining
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Training'
+      responses:
+        '200':
+          description: Training updated
+        '400':
+          description: Invalid request data
+        '404':
+          description: Training not found
+          
+    delete:
+      summary: Delete a training
+      operationId: deleteTraining
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Training deleted
+        '400':
+          description: Training not found
+    
+components:
+  schemas:
+    Training:
+      type: object
+      required:
+        - Title
+        - SkillName
+        - Progress
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the training
+        title: 
+          type: string
+          description: Title of the training
+        skillName:
+          type: string
+          description: skillName of the training
+        progress:
+          type: integer
+          description: Progress of the training in %
+        courses:
+          type: array
+          items: 
+            type: string
+          description: Array of courses - See more in the courses microservice
+        metadata: 
+          type: object
+          additionalProperties: true
+          description: Additional metadata related to the training
