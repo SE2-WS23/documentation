@@ -54,7 +54,7 @@ paths:
   /jobs/{jobId}:
     get:
       summary: Get a job by ID
-      operationId: getJobByID
+      operationId: getJobById
       parameters:
         - name: jobId
           in: path
