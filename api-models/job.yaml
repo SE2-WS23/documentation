@@ -50,6 +50,8 @@ paths:
       responses:
         '201':
           description: Job created
+        '400':
+          description: Invalid request data
   
   /jobs/{jobId}:
     get:
