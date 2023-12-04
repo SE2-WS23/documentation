@@ -32,10 +32,10 @@ paths:
               examples:
                 fullData:
                   summary: Response with full=true
-                  value: [{"userId": "762b1737-fee6-4306-bab4-ebed7b5659ed", "courseId": "c3ed8a9e-ac75-4b24-807c-3624c38b49e0", "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": "762b1737-fee6-4306-bab4-ebed7b5659ed", "courseId": "762b1737-fee6-4306-bab4-ebed7b5659ed", "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
-                lengthAndQuality:
-                  summary: Response with fields=courseLength,courseQuality
-                  value: [{"courseLength": 3, "courseQuality": 4}, {"courseLength": 6, "courseQuality": 3}]
+                  value: [{"userId": 1, "courseId": 2, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 2, "courseId": 4, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
+                specfifcCourses:
+                  summary: Response with only=1,2,3
+                  value: [{"userId": 1, "courseId": 1, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 4, "courseId": 2, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}, {"userId": 4, "courseId": 3, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
                 
 
     post:
@@ -79,7 +79,7 @@ paths:
               examples:
                 fullData:
                   summary: Response with full=true
-                  value: [{"userId": "562b1737-fee6-4306-bab4-ebed7b5659ed", "courseId": "c3ed8a9e-ac75-4b24-807c-3624c38b49e0", "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": "762b1737-fee6-4306-bab4-ebed7b5659ed", "courseId": "c3ed8a9e-ac75-4b24-807c-3624c38b49e0", "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
+                  value: [{"userId": 4, "courseId": 3, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 2, "courseId": 3, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
                 
 
     put:
@@ -123,12 +123,10 @@ components:
       properties:
         userId:
           type: integer
-          format: uuid 
           description: Unique identifier for the user
           minimum: 1
         courseId:
           type: integer
-          format: uuid
           description: Unique identifier for the course
         courseLength:
           type: integer
