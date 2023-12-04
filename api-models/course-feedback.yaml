@@ -33,10 +33,12 @@ paths:
                 fullData:
                   summary: Response with full=true
                   value: [{"userId": 1, "courseId": 2, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 2, "courseId": 4, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
-                specfifcCourses:
-                  summary: Response with only=1,2,3
+                specfifcCoursesFull:
+                  summary: Response with only=1,2,3 and full=true
                   value: [{"userId": 1, "courseId": 1, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 4, "courseId": 2, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}, {"userId": 4, "courseId": 3, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
-                
+                specificCourses:
+                  summary: Response with only=1,2,3 and full=false
+                  value: [{"userId": 1, "courseId": 1, "courseQuality": 5, "courseLength": 5}, {"userId": 4, "courseId": 2, "courseQuality": 4, "courseLength": 3}, {"userId": 4, "courseId": 3, "courseQuality": 4, "courseLength": 3}]
 
     post:
       summary: Create a new resource
@@ -50,6 +52,8 @@ paths:
       responses:
         "201":
           description: Course feedback created
+        "400":
+          description: Invalid request body
 
   /course-feedback/{courseId}:
     get:
@@ -101,6 +105,10 @@ paths:
       responses:
         "200":
           description: Course feedback updated
+        "400":
+          description: Invalid requestBody
+        "404":
+          description: Course feedback not found
 
     delete:
       summary: Delete a specific course feedback
@@ -115,6 +123,8 @@ paths:
       responses:
         "204":
           description: Course feedback deleted
+        "404":
+          description: Course feedback not found
 
 components:
   schemas:
