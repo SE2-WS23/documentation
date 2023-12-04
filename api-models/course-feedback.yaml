@@ -1,0 +1,158 @@
+openapi: "3.0.0"
+info:
+  title: Course Feedback API
+  version: "1.0.0"
+  description: API for managing Course feedback with field selection and full data retrieval.
+
+paths:
+  /course-feedback:
+    get:
+      summary: Retrieve a list of all Course feedbacks
+      operationId: getCourseFeedback
+      parameters:
+        - name: only
+          in: query
+          description: Array of course IDs to fetch a subset of courses
+          schema:
+            type: string
+        - name: full
+          in: query
+          description: Flag to include nested data in the response
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A list of all Course feedbacks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Feedback"
+              examples:
+                fullData:
+                  summary: Response with full=true
+                  value: [{"userId": 1, "courseId": 2, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 2, "courseId": 4, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
+                specfifcCoursesFull:
+                  summary: Response with only=1,2,3 and full=true
+                  value: [{"userId": 1, "courseId": 1, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 4, "courseId": 2, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}, {"userId": 4, "courseId": 3, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
+                specificCourses:
+                  summary: Response with only=1,2,3 and full=false
+                  value: [{"userId": 1, "courseId": 1, "courseQuality": 5, "courseLength": 5}, {"userId": 4, "courseId": 2, "courseQuality": 4, "courseLength": 3}, {"userId": 4, "courseId": 3, "courseQuality": 4, "courseLength": 3}]
+
+    post:
+      summary: Create a new resource
+      operationId: createCourseFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Feedback"
+      responses:
+        "201":
+          description: Course feedback created
+        "400":
+          description: Invalid request body
+
+  /course-feedback/{courseId}:
+    get:
+      summary: Retrieve a specific course feedback
+      operationId: getCourseFeedback
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          description: Unique identifier of the course
+          schema:
+            type: string
+        - name: full
+          in: query
+          description: Flag to include nested data in the response
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Detailed information about the course feedback
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Feedback"
+              examples:
+                fullData:
+                  summary: Response with full=true
+                  value: [{"userId": 4, "courseId": 3, "courseQuality": 5, "courseLength": 5, "nestedData": {"detail1": "Detail 1.1", "detail2": "Detail 1.2"}}, {"userId": 2, "courseId": 3, "courseQuality": 4, "courseLength": 3, "nestedData": {"detail1": "Detail 2.1", "detail2": "Detail 2.2"}}]
+                
+
+    put:
+      summary: Update an existing course feedback
+      operationId: updateCourseFeedback
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          description: Unique identifier of the course
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Feedback"
+      responses:
+        "200":
+          description: Course feedback updated
+        "400":
+          description: Invalid requestBody
+        "404":
+          description: Course feedback not found
+
+    delete:
+      summary: Delete a specific course feedback
+      operationId: deleteCourseFeedback
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          description: Unique identifier of the course
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Course feedback deleted
+        "404":
+          description: Course feedback not found
+
+components:
+  schemas:
+    Feedback:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: Unique identifier for the user
+          minimum: 1
+        courseId:
+          type: integer
+          description: Unique identifier for the course
+        courseLength:
+          type: integer
+          description: Length of the course rated by the user, on a scale of 1 to 10
+          minimum: 1
+          maximum: 10
+        courseQuality:
+          type: integer
+          description: Quality of the course rated by the user, on a scale of 1 to 10
+          minimum: 1
+          maximum: 10
+        comments:
+          type: string
+          description: Optional comments provided by the user
+      required:
+        - userId
+        - courseId
+        - courseLength
+        - courseQuality
