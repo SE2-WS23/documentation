@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: Employee Microservice API
+  description: >-
+    This API manages different types of employees in SkillVerse
+
+paths:
+  /employees:
+    get:
+      summary: List all employees
+      operationId: getAllEmployees
+      parameters: 
+        - name: only
+          in: query
+          description: Array of employee IDs to fetch ta subset of employees
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: full
+          in: query
+          description: Determine if the nested data will be returned
+          required: false
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    
+    post: 
+      summary: Create a new employee
+      operationId: createEmployee
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '201':
+          description: Employee created
+  
+  /employees/{employeeId}:
+    get:
+      summary: Get a employee by ID
+      operationId: getEmployeeByID
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Employee details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          description: Employee not found
+          
+    put:
+      summary: Update a employee
+      operationId: updateEmployee
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          description: Employee updated
+        '400':
+          description: Invalid request data
+        '404':
+          description: Employee not found
+          
+    delete:
+      summary: Delete a employee
+      operationId: deleteEmployee
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Employee deleted
+        '400':
+          description: Employee not found
+    
+components:
+  schemas:
+    Employee:
+      type: object
+      required:
+        - FullName
+        - Email
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the employee
+        fullName: 
+          type: string
+          description: full name of the employee
+        extraInfo:
+          type: string
+          description: extra info of the employee
+        phonenumber:
+          type: string
+          description: phone number of the employee
+        files:
+          type: array
+          items: 
+            type: string
+            format: binary
+          description: Array of files - e.g. CV
+        trainings:
+          type: array
+          items:
+            type: string
+          description: Array of trainings - See more in the trainings microservice
+        metadata: 
+          type: object
+          additionalProperties: true
+          description: Additional metadata related to the employee
