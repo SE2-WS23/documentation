@@ -115,7 +115,6 @@ components:
       type: object
       required:
         - FullName
-        - Email
       properties:
         id:
           type: string
