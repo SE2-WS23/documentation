@@ -122,6 +122,9 @@ components:
         fullName: 
           type: string
           description: full name of the employee
+        email:
+          type: string
+          description: email of the employee
         extraInfo:
           type: string
           description: extra info of the employee
