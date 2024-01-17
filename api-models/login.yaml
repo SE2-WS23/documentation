@@ -63,3 +63,29 @@ paths:
                   userRole:
                     type: string
                     description: User's role (employee or employer)
+
+components:
+  schemas:
+    User:
+    type: object
+      required:
+        - User Name
+        - Email
+        - Company Name
+        - Role (employee or employer)
+      properties:
+        username:
+          type: string
+          description: Name of the user (should be unique)
+        email:
+          type: string
+          description: email address of the user (should be unique)
+        password:
+          type: string
+          description: password of the user 
+        company:
+          type: string
+          description: company of the user
+        userRole:
+          type: string
+          description: User's role (employee or employer)
