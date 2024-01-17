@@ -71,6 +71,7 @@ components:
       required:
         - User Name
         - Email
+        - Password
         - Company Name
         - Role (employee or employer)
       properties:
