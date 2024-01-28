@@ -84,3 +84,4 @@ components:
         userRole:
           type: string
           description: User's role (employee or employer)
+          
