@@ -15,10 +15,9 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                username:
                   type: string
-                  format: email
-                  description: User's email address
+                  description: User's Name
                 password:
                   type: string
                   description: User's password
@@ -35,13 +34,12 @@ paths:
       summary: Get User Information
       description: Endpoint for retrieving user details
       parameters:
-        - name: email
+        - name: username
           in: query
-          description: User's email address
+          description: User's Name
           required: true
           schema:
             type: string
-            format: email
       responses:
         '200':
           description: Successful retrieval of user information
@@ -50,10 +48,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  email:
+                  username:
                     type: string
-                    format: email
-                    description: User's email address
+                    format: username
+                    description: User's Name
                   password:
                     type: string
                     description: User's password (Note: For demonstration purposes only; don't expose passwords in a real API)
@@ -70,7 +68,6 @@ components:
     type: object
       required:
         - User Name
-        - Email
         - Password
         - Company Name
         - Role (employee or employer)
@@ -78,9 +75,6 @@ components:
         username:
           type: string
           description: Name of the user (should be unique)
-        email:
-          type: string
-          description: email address of the user (should be unique)
         password:
           type: string
           description: password of the user 
